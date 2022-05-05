@@ -1,51 +1,49 @@
 import { useQuery } from "react-query";
 import React from "react";
-
-type Department = {
-  name: string;
+import Loading from "./Loading";
+import FetchingError from "./FetchingError";
+type ArtObject = {
+  title?: string;
 };
 
 export default function Artwork() {
   const todayHash = getToday_sHash();
-  console.log(todayHash);
 
-  const { status, error, data } = useQuery<Department, Error>(
-    "department",
+  const response = useQuery<ArtObject, Error>(
+    "artwork",
     () => getArtwork(todayHash)
   );
 
-  if (status === "loading") {
-    return <div>...</div>;
+  if (response.status === "loading") {
+    return <Loading/>;
   }
-  if (status === "error") {
-    return <div>{error!.message}</div>;
+  if (response.status === "error") {
+    return <FetchingError message={response.error!.message}/>;
   }
-
+  const fetched : any = response.data;
+  type ObjectKey = keyof typeof fetched;
+  const title = 'title' as ObjectKey;
   return (
-    <h1>Artwork Page</h1>
+    <h1>{fetched[title]}</h1>
   );
 }
 
 async function getArtwork(hash: string) {
+  hash = '436524'; // valid hash  
   const response = await fetch(
     "https://collectionapi.metmuseum.org/public/collection/v1/objects/" + hash
   );
-  console.log(
-    "🚀 ~ file: Artwork.tsx ~ line 38 ~ getArtwork ~ response",
-    response
-  );
+
   if (!response.ok) {
     throw new Error("Problem fetching");
   }
-
-  return response.json();
+  const artwork = await response.json();
+  return artwork;
 }
 
 function getToday_sHash() {
   const today = new Date();
   return (
-    today.getFullYear() +
-    String(today.getMonth()) +
-    String(today.getDate()).padStart(2, "0")
+    String(today.getFullYear() +today.getMonth()).substring(0,4) +   String(today.getDate()).padStart(2, "0")
   );
 }
