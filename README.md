@@ -16,7 +16,7 @@ TBD
 
 
 ### 사용하는 API : [메트로폴리탄 미술관 API](https://metmuseum.github.io/)
-> 미술작품의 id 기준으로 데이터를 불러오며, 올해의 날짜는 동일한 미술작품의 id와 매핑됩니다. 
+> 미술작품의 id 기준으로 데이터를 불러오며, 올해의 날짜는 하나의 id와 매핑됩니다.
 ## 사용 기술
 - React
 - Tailwindcss
