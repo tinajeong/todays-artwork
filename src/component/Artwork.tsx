@@ -2,12 +2,16 @@ import { useQuery } from "react-query";
 import React from "react";
 import Loading from "./Loading";
 import FetchingError from "./FetchingError";
-type ArtObject = {
-  title?: string;
+import { getTodaysHash } from "../util/DateUtil"
+interface ArtObject {
+  title: string;
+  artistDisplayName: string;
+  artistDisplayBio: string;
+  primaryImage: string;
 };
 
 export default function Artwork() {
-  const todayHash = getToday_sHash();
+  const todayHash = getTodaysHash();
 
   const response = useQuery<ArtObject, Error>(
     "artwork",
@@ -15,20 +19,26 @@ export default function Artwork() {
   );
 
   if (response.status === "loading") {
-    return <Loading/>;
+    return <Loading />;
   }
   if (response.status === "error") {
-    return <FetchingError message={response.error!.message}/>;
+    return <FetchingError message={response.error!.message} />;
   }
-  const fetched : any = response.data;
-  type ObjectKey = keyof typeof fetched;
-  const title = 'title' as ObjectKey;
+  const fetched = response.data;
   return (
-    <h1>{fetched[title]}</h1>
+    <div className="artwork">
+      {
+        fetched ? <>
+          <h1>{fetched.title}</h1>
+          <h3>{fetched['artistDisplayName']}</h3>
+          <h3>{fetched['artistDisplayBio']}</h3>
+          <img src={fetched['primaryImage']} alt={fetched['primaryImage']} />
+        </>
+          : <Loading />
+      }
+    </div>
   );
-}
-
-async function getArtwork(hash: string) {
+} async function getArtwork(hash: string) {
   hash = '436524'; // valid hash  
   const response = await fetch(
     "https://collectionapi.metmuseum.org/public/collection/v1/objects/" + hash
@@ -37,13 +47,5 @@ async function getArtwork(hash: string) {
   if (!response.ok) {
     throw new Error("Problem fetching");
   }
-  const artwork = await response.json();
-  return artwork;
-}
-
-function getToday_sHash() {
-  const today = new Date();
-  return (
-    String(today.getFullYear() +today.getMonth()).substring(0,4) +   String(today.getDate()).padStart(2, "0")
-  );
+  return await response.json();
 }
