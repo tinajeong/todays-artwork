@@ -10,6 +10,7 @@ interface ArtObject {
   primaryImage: string;
   dimensions: string;
   medium: string;
+  objectDate : string;
 };
 
 export default function Artwork() {
@@ -40,6 +41,7 @@ export default function Artwork() {
             </div>
             <h3 className="text-slate-500">{fetched['dimensions']}</h3>
             <h3 className="text-slate-500">{fetched['medium']}</h3>
+            <h3 className="text-slate-500">{fetched['objectDate']}</h3>
           </div>
         </div>
           : <Loading />

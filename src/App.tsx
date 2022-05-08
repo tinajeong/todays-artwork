@@ -12,7 +12,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <NavigationBar/>
         <Artwork/>
-        <ReactQueryDevtools initialIsOpen={true} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </div>
   );
