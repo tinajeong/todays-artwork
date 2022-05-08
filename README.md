@@ -20,7 +20,6 @@ TBD
 ## 사용 기술
 - React
 - Tailwindcss
-- Redux
 - CRA
 - Typescript
 - react-query
