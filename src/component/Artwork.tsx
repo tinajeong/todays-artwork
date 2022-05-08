@@ -8,6 +8,8 @@ interface ArtObject {
   artistDisplayName: string;
   artistDisplayBio: string;
   primaryImage: string;
+  dimensions: string;
+  medium: string;
 };
 
 export default function Artwork() {
@@ -28,12 +30,18 @@ export default function Artwork() {
   return (
     <div className="artwork">
       {
-        fetched ? <>
-          <h1>{fetched.title}</h1>
-          <h3>{fetched['artistDisplayName']}</h3>
-          <h3>{fetched['artistDisplayBio']}</h3>
-          <img src={fetched['primaryImage']} alt={fetched['primaryImage']} />
-        </>
+        fetched ? <div className="grid grid-cols-2 place-items-center bg-gray-900">
+          <img src={fetched['primaryImage']} alt={fetched['primaryImage']} className="p-8" />
+          <div className="flex-column">
+            <h1 className="text-2xl tracking-tight font-extrabold bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-gray-100 border border-white-200 rounded sm:text-2xl md:text-3xl mb-2">{fetched.title}</h1>
+            <h3 className="max-w-sm mx-auto text-gray-100 shadow-lg items-center space-x-4 font-extrabold">{fetched['artistDisplayName']}</h3>
+            <div className="text-slate-900 hover:text-gray-100">
+              <h3>({fetched['artistDisplayBio']})</h3>
+            </div>
+            <h3 className="text-slate-500">{fetched['dimensions']}</h3>
+            <h3 className="text-slate-500">{fetched['medium']}</h3>
+          </div>
+        </div>
           : <Loading />
       }
     </div>
