@@ -4,7 +4,7 @@ export default function Loading() {
   return (
     <div className="grid grid-cols-1 place-items-center m-6">
       <img src={moai_spin} width={36} height={36} alt="spin"></img>
-      <h3>Loading...</h3>
+      <h3 className="text-gray-100" >Loading...</h3>
     </div>
   );
 }
