@@ -14,4 +14,12 @@ module.exports = {
     "no-unused-vars": 0,
     "react/no-unescaped-entities": 0,
   },
+  overrides: [
+    {
+      files: ["*.tsx", "*.vue"],
+      rules: {
+        "no-undef": "off",
+      },
+    },
+  ],
 };
