@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.4.3",
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.6",
     "@testing-library/jest-dom": "^5.16.4",
@@ -25,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",    
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint -c .eslintrc.js --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "npm run lint -- --fix"
